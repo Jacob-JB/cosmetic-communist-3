@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+    import CosmeticList from "$lib/components/CosmeticList.svelte";
+    import FoundCosmetics from "$lib/components/FoundCosmetics.svelte";
+</script>
+
+<div class="flex flex-row">
+    <CosmeticList />
+    <FoundCosmetics />
+</div>
