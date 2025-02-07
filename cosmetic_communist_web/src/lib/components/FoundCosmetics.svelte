@@ -41,13 +41,14 @@
     });
 </script>
 
-<ul>
+<ul class="m-4">
     {#each foundCosmetics as foundCosmetic}
         <li>
-            <div class="flex flex-col">
+            <div class="m-2 flex flex-col">
                 <p>{foundCosmetic.cosmetic}</p>
                 <button
                     type="button"
+                    class="rounded-sm bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-xs hover:bg-red-500"
                     onclick={async () => {
                         const db = await use_db();
                         await db.query(`DELETE ${foundCosmetic.id}`);

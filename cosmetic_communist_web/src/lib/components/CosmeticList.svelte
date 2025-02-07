@@ -53,7 +53,7 @@
                         type="button"
                         class="rounded-sm {cosmetic.need
                             ? 'bg-indigo-600'
-                            : 'bg-indigo-400'} px-2 py-1 text-xs font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            : 'bg-indigo-400'} px-2 py-1 text-xs font-semibold text-white shadow-xs hover:bg-indigo-500"
                         onclick={async () => {
                             const db = await use_db();
                             if (cosmetic.need) {
