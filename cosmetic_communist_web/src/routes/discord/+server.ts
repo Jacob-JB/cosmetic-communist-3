@@ -1,4 +1,5 @@
 import { redirect } from "@sveltejs/kit";
+import { CLIENT_ID, CLIENT_SECRET } from "$env/static/private";
 
 export async function GET({ url, cookies }) {
   try {
@@ -14,8 +15,8 @@ export async function GET({ url, cookies }) {
       );
     }
 
-    const clientId = "1136630698762051668"; // Replace with env variable
-    const clientSecret = "bHFrif29sOE0wBli90i_Ce2nGYi250ly"; // Replace with env variable
+    const clientId = CLIENT_ID; // Replace with env variable
+    const clientSecret = CLIENT_SECRET; // Replace with env variable
     const redirectUri = "http://localhost:5173/discord"; // Ensure it's configured securely
 
     // Use URLSearchParams for encoding

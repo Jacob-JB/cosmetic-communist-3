@@ -1,5 +1,6 @@
 import { browser } from "$app/environment";
 import Surreal from "surrealdb";
+import { getCookieValue } from "$lib/cookie";
 
 const browser_user_db = browser ? init_surreal_client() : null;
 
@@ -9,10 +10,6 @@ export async function use_db(): Promise<Surreal> {
 
 export async function init_surreal_client(): Promise<Surreal> {
   const db = new Surreal();
-
-  // https://stackoverflow.com/questions/5639346/what-is-the-shortest-function-for-reading-a-cookie-by-name-in-javascript
-  const getCookieValue = (name: String) =>
-    document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
 
   let discordToken = getCookieValue("discord-token");
 

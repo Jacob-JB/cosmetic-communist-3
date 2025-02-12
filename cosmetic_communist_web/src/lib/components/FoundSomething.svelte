@@ -1,17 +1,25 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { use_db } from "$lib/database.ts";
+    import { use_db } from "$lib/database";
 
-    let cosmetics: string[] = $state([]);
+    type Cosmetic = {
+        id: RecordId;
+        name: string;
+    };
+
+    let cosmetics: Cosmetic[] = $state([]);
     let filter = $state("");
     let selected: int = $state(null);
 
     onMount(async () => {
         const db = await use_db();
-        const response = await db.query("SELECT id FROM cosmetic;");
+        const response = await db.query("SELECT id, name FROM cosmetic;");
 
         response[0]?.forEach((record) => {
-            cosmetics.push(record.id.id);
+            cosmetics.push({
+                id: record.id,
+                name: record.name,
+            });
         });
     });
 </script>
@@ -19,16 +27,14 @@
 <div class="m-4 flex flex-col">
     <div class="m-2 flex flex-col">
         {#if selected != null}
-            <p>Found: {cosmetics[selected]}</p>
+            <p>Found: {cosmetics[selected].name}</p>
             <button
                 type="button"
                 class="rounded-sm bg-green-600 px-2 py-1 text-xs font-semibold text-white shadow-xs hover:bg-green-500"
                 onclick={async () => {
                     const db = await use_db();
                     await db.query(
-                        "INSERT INTO cosmeticFound { foundUser: $auth, foundCosmetic: cosmetic:\`" +
-                            cosmetics[selected] +
-                            "\` };",
+                        `INSERT INTO cosmeticFound { foundUser: $auth, foundCosmetic: ${cosmetics[selected].id} };`,
                     );
                     selected = null;
                     filter = "";
@@ -42,7 +48,7 @@
     <div class="m-2 flex flex-col">
         <input type="text" placeholder="Filter" bind:value={filter} />
         {#each cosmetics as cosmetic, i}
-            {#if cosmetic.toLowerCase().includes(filter.toLowerCase())}
+            {#if cosmetic.name.toLowerCase().includes(filter.toLowerCase())}
                 <button
                     type="button"
                     class={selected == i
@@ -52,7 +58,7 @@
                         selected = i;
                     }}
                 >
-                    {cosmetic}
+                    {cosmetic.name}
                 </button>
             {/if}
         {/each}
